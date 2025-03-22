@@ -10,13 +10,13 @@
             margin: 0;
             padding: 0;
             font-family: 'Poppins', sans-serif;
-            background: #0d0d0d url('ipl-2025-poster.jpg') no-repeat center center/cover;
+            background: #0d0d0d url('https://pramodmadushan.me/assets/ipl-2025-poster.jpg') no-repeat center center/cover;
             color: #fff;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            height: 100vh;
+            min-height: 100vh;
             text-align: center;
         }
         header {
@@ -45,7 +45,6 @@
             max-width: 900px;
             border: 3px solid #fff;
             border-radius: 10px;
-            box-shadow: none;
         }
         .footer {
             margin-top: 15px;
@@ -75,27 +74,45 @@
     <header>IPL Live Streaming - Watch Live</header>
     <div class="container">
         <video id="video" controls autoplay></video>
-        <p class="footer">&copy; 2025 IPL Streaming. All rights reserved. Made by Pramod with ❤️</p>
+        <p class="footer">&copy; 2025 IPL Streaming. All rights reserved.</p>
     </div>
     <script>
-        var video = document.getElementById('video');
-        var videoSrc = "https://puc100.mytime1.top:8088/live/webcricwillow/playlist.m3u8?id=120375&pk=e70c4f34e0b83a99458b5a6d7debc96c8b42c94aa59e3bec342629a50a0573e8ec93794f690dd8d22ec84fc9d3555246e48aceacd33658aed2bcef48cf5fcbd6";
-        
-        if (Hls.isSupported()) {
-            var hls = new Hls();
-            hls.loadSource(videoSrc);
-            hls.attachMedia(video);
-            hls.on(Hls.Events.MANIFEST_PARSED, function () {
-                video.play();
+        document.addEventListener("DOMContentLoaded", function () {
+            var video = document.getElementById('video');
+            var videoSrc = "https://puc100.mytime1.top:8088/live/webcricwillow/playlist.m3u8?id=120375&pk=e70c4f34e0b83a99458b5a6d7debc96c8b42c94aa59e3bec342629a50a0573e8ec93794f690dd8d22ec84fc9d3555246e48aceacd33658aed2bcef48cf5fcbd6";
+            
+            function playVideo() {
+                if (Hls.isSupported()) {
+                    var hls = new Hls({
+                        debug: true,  // Debugging for better troubleshooting
+                        xhrSetup: function (xhr) {
+                            xhr.withCredentials = false;  // Ensure CORS is not an issue
+                        }
+                    });
+                    hls.loadSource(videoSrc);
+                    hls.attachMedia(video);
+                    hls.on(Hls.Events.MANIFEST_PARSED, function () {
+                        video.play().catch(error => console.error("Video playback error:", error));
+                    });
+                } else if (video.canPlayType('application/vnd.apple.mpegurl')) {
+                    // For browsers that support native HLS (like Safari)
+                    video.src = videoSrc;
+                    video.addEventListener('loadedmetadata', function () {
+                        video.play().catch(error => console.error("Native video playback error:", error));
+                    });
+                } else {
+                    alert("Your browser does not support HLS streaming.");
+                }
+            }
+
+            playVideo();
+
+            // Retry loading if network issues occur
+            video.addEventListener('error', function () {
+                console.log("Retrying video playback...");
+                playVideo();
             });
-        } else if (video.canPlayType('application/vnd.apple.mpegurl')) {
-            video.src = videoSrc;
-            video.addEventListener('loadedmetadata', function () {
-                video.play();
-            });
-        } else {
-            alert("Your browser does not support HLS streaming.");
-        }
+        });
     </script>
 </body>
 </html>
