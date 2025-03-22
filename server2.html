@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IPL Live Stream | Watch Now</title>
+    <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Poppins', sans-serif;
+            background: #0d0d0d url('ipl-2025-poster.jpg') no-repeat center center/cover;
+            color: #fff;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            text-align: center;
+        }
+        header {
+            width: 100%;
+            background: rgba(0, 0, 0, 0.85);
+            padding: 15px 0;
+            font-size: 26px;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+        }
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 90%;
+            max-width: 1000px;
+            background: rgba(0, 0, 0, 0.8);
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.6);
+        }
+        video {
+            width: 100%;
+            max-width: 900px;
+            border: 3px solid #fff;
+            border-radius: 10px;
+            box-shadow: none;
+        }
+        .footer {
+            margin-top: 15px;
+            font-size: 14px;
+            opacity: 0.7;
+        }
+        @media (max-width: 768px) {
+            body {
+                height: auto;
+                padding: 20px 0;
+            }
+            header {
+                font-size: 22px;
+                padding: 10px 0;
+            }
+            .container {
+                width: 95%;
+                padding: 15px;
+            }
+            video {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>IPL Live Streaming - Watch Live</header>
+    <div class="container">
+        <video id="video" controls autoplay></video>
+        <p class="footer">&copy; 2025 IPL Streaming. All rights reserved. Made by Pramod with ❤️</p>
+    </div>
+    <script>
+        var video = document.getElementById('video');
+        var videoSrc = "https://puc200.mytime1.top:8088/live/webcricsky/playlist.m3u8?id=121345&pk=4aeb10c63192c92245805ad4a9c1491310eff0634cd825705d83fce0c981834eec93794f690dd8d22ec84fc9d3555246e48aceacd33658aed2bcef48cf5fcbd6";
+        
+        if (Hls.isSupported()) {
+            var hls = new Hls();
+            hls.loadSource(videoSrc);
+            hls.attachMedia(video);
+            hls.on(Hls.Events.MANIFEST_PARSED, function () {
+                video.play();
+            });
+        } else if (video.canPlayType('application/vnd.apple.mpegurl')) {
+            video.src = videoSrc;
+            video.addEventListener('loadedmetadata', function () {
+                video.play();
+            });
+        } else {
+            alert("Your browser does not support HLS streaming.");
+        }
+    </script>
+</body>
+</html>
