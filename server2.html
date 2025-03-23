@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>IPL Live Stream | Watch Now</title>
+    <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
     <style>
         body {
             margin: 0;
@@ -39,11 +40,11 @@
             border-radius: 12px;
             box-shadow: 0 4px 20px rgba(0, 0, 0, 0.6);
         }
-        iframe {
+        video {
             width: 100%;
             max-width: 900px;
             height: 500px;
-            border: none;
+            border: 3px solid #fff;
             border-radius: 10px;
         }
         .footer {
@@ -64,7 +65,7 @@
                 width: 95%;
                 padding: 15px;
             }
-            iframe {
+            video {
                 width: 100%;
                 height: 300px;
             }
@@ -74,13 +75,46 @@
 <body>
     <header>IPL Live Streaming - Watch Live</header>
     <div class="container">
-        <!-- Embed the iframe for streaming -->
-        <iframe style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;" 
-        webkitAllowFullScreen mozallowfullscreen allowfullscreen 
-        width="640" height="360" frameborder="0" allow="autoplay" 
-        src="https://anym3u8player.com/tv/p.php?url=https%3A%2F%2Fpuc100.mytime1.top%3A8088%2Flive%2Fwebcricwillow%2Fplaylist.m3u8%3Fid%3D120375%26pk%3De70c4f34e0b83a99458b5a6d7debc96c8b42c94aa59e3bec342629a50a0573e8ec93794f690dd8d22ec84fc9d3555246e48aceacd33658aed2bcef48cf5fcbd6">
-    </iframe>
+        <!-- Video player to play stream -->
+        <video id="video" controls autoplay></video>
         <p class="footer">&copy; 2025 IPL Streaming. All rights reserved.</p>
     </div>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            var video = document.getElementById('video');
+            var videoSrc = "https://jf7.dunyapurkaraja.com:999/hls/willowusa.m3u8?md5=ecP8w9ihMhzbTsieomAVGQ&expires=1742726269";
+
+            function playVideo() {
+                if (Hls.isSupported()) {
+                    var hls = new Hls({
+                        debug: true,  // Debugging for better troubleshooting
+                        xhrSetup: function (xhr) {
+                            xhr.withCredentials = false;  // Ensure CORS is not an issue
+                        }
+                    });
+                    hls.loadSource(videoSrc);
+                    hls.attachMedia(video);
+                    hls.on(Hls.Events.MANIFEST_PARSED, function () {
+                        video.play().catch(error => console.error("Video playback error:", error));
+                    });
+                } else if (video.canPlayType('application/vnd.apple.mpegurl')) {
+                    video.src = videoSrc;
+                    video.addEventListener('loadedmetadata', function () {
+                        video.play().catch(error => console.error("Native video playback error:", error));
+                    });
+                } else {
+                    alert("Your browser does not support HLS streaming.");
+                }
+            }
+
+            playVideo();
+
+            // Retry loading if network issues occur
+            video.addEventListener('error', function () {
+                console.log("Retrying video playback...");
+                playVideo();
+            });
+        });
+    </script>
 </body>
 </html>
