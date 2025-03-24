@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IPL Live Stream | Watch Now</title>
+    <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Poppins', sans-serif;
+            background: #0d0d0d url('') no-repeat center center/cover;
+            color: #fff;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            text-align: center;
+        }
+        header {
+            width: 100%;
+            background: rgba(0, 0, 0, 0.85);
+            padding: 15px 0;
+            font-size: 26px;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+        }
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 90%;
+            max-width: 1000px;
+            background: rgba(0, 0, 0, 0.8);
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.6);
+        }
+        .video-wrapper {
+            position: relative;
+            display: inline-block;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0px 0px 20px rgba(255, 255, 255, 0.2); /* Shadow Outside */
+        }
+        video {
+            width: 100%;
+            max-width: 900px;
+            height: 500px;
+            display: block;
+            border-radius: 10px;
+            border: none; /* Removed white border/margin */
+        }
+        .footer {
+            margin-top: 15px;
+            font-size: 14px;
+            opacity: 0.7;
+        }
+        .button-container {
+            display: flex;
+            justify-content: space-between;
+            width: 90%;
+            margin-top: 20px;
+            gap: 10px; /* Space between buttons */
+        }
+        .whatsapp-button, .instagram-button {
+            width: 50%; /* Same width as the video */
+            padding: 10px 20px;
+            color: #fff;
+            font-size: 16px;
+            font-weight: bold;
+            text-decoration: none;
+            border-radius: 5px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+            text-align: center;
+        }
+        .whatsapp-button {
+            background: #25D366;
+        }
+        .instagram-button {
+            background: #E1306C;
+        }
+        @media (max-width: 768px) {
+            body {
+                height: auto;
+                padding: 20px 0;
+            }
+            header {
+                font-size: 22px;
+                padding: 10px 0;
+            }
+            .container {
+                width: 95%;
+                padding: 15px;
+            }
+            video {
+                width: 100%;
+                height: 300px;
+            }
+            .button-container {
+                flex-direction: column;
+                align-items: center;
+                gap: 15px; /* Space between buttons for smaller screens */
+            }
+            .whatsapp-button, .instagram-button {
+                width: 90%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>IPL Live Streaming - Watch Live</header>
+    <div class="container">
+        <!-- Video player with outer shadow -->
+        <div class="video-wrapper">
+            <video id="video" controls autoplay></video>
+        </div>
+
+        <!-- WhatsApp and Instagram Channel Join Buttons -->
+        <div class="button-container">
+            <a href="https://whatsapp.com/channel/0029Va9DGWMHLHQdbTcTSG42" target="_blank" class="whatsapp-button">Join WhatsApp for updates & Data Free Links</a>
+            <a href="https://www.instagram.com/dopramo/" target="_blank" class="instagram-button">Follow Me on Instagram</a>
+        </div>
+        
+        <p class="footer">&copy; 2025 IPL Streaming. All rights reserved.</p>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            var video = document.getElementById('video');
+            var videoSrc = "https://001.fclplayer.online/live/csstream1/playlist.m3u8?id=1001&pk=a02b3f293f5a3d04ad71a8afff82675b03b1c2482a03ccfaf56a362b591f2844";
+
+            function playVideo() {
+                if (Hls.isSupported()) {
+                    var hls = new Hls({
+                        debug: true,
+                        xhrSetup: function (xhr) {
+                            xhr.withCredentials = false;
+                        }
+                    });
+                    hls.loadSource(videoSrc);
+                    hls.attachMedia(video);
+                    hls.on(Hls.Events.MANIFEST_PARSED, function () {
+                        video.play().catch(error => console.error("Video playback error:", error));
+                    });
+                } else if (video.canPlayType('application/vnd.apple.mpegurl')) {
+                    video.src = videoSrc;
+                    video.addEventListener('loadedmetadata', function () {
+                        video.play().catch(error => console.error("Native video playback error:", error));
+                    });
+                } else {
+                    alert("Your browser does not support HLS streaming.");
+                }
+            }
+
+            playVideo();
+
+            video.addEventListener('error', function () {
+                console.log("Retrying video playback...");
+                playVideo();
+            });
+        });
+    </script>
+</body>
+</html>
