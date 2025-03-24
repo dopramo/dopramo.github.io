@@ -5,30 +5,62 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Watch IPL Live</title>
     <style>
+        /* Container to hold the background image */
+        .background-container {
+            position: fixed; /* Fix the background to the viewport */
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            z-index: -1; /* Keep the background behind the content */
+        }
+
+        /* Apply the background image with the dark filter */
+        .background-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover; /* Ensure the image covers the whole screen */
+        }
+
+        .dark-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.8); /* Apply dark filter */
+        }
+
+        /* Styling for the rest of the page */
         body {
-            background-color: #121212;
-            background: #0d0d0d url('https://d16f573ilcot6q.cloudfront.net/wp-content/uploads/2024/03/IPL-2025.webp') no-repeat center center/cover;
             color: #fff;
             font-family: Arial, sans-serif;
             text-align: center;
-            padding: 50px;
+            margin: 0;
+            padding: 0;
+            height: 100%; /* Allow body to take full height */
         }
+
         .container {
             display: flex;
             justify-content: center;
             gap: 30px;
+            padding-top: 100px; /* Adjust padding for content positioning */
         }
+
         .channel {
-            background: #1e1e1e;
+            background: rgba(30, 30, 30, 0.9); /* Dark semi-transparent background for the channel box */
             padding: 20px;
             border-radius: 10px;
             box-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
             transition: transform 0.3s;
             font-size: 24px;
         }
+
         .channel:hover {
             transform: scale(1.05);
         }
+
         a {
             display: block;
             margin-top: 10px;
@@ -37,12 +69,49 @@
             font-size: 18px;
             font-weight: bold;
         }
+
         a:hover {
             color: #ffa500;
+        }
+
+        /* Styling for the social media buttons */
+        .social-buttons {
+            margin-top: 40px;
+        }
+
+        .social-buttons a {
+            background-color: #25D366; /* WhatsApp green */
+            color: white;
+            padding: 8px 16px; /* Reduced padding for shorter button length */
+            border-radius: 5px;
+            margin: 10px;
+            text-decoration: none;
+            font-size: 16px; /* Slightly smaller font size */
+            transition: background-color 0.3s ease;
+            display: inline-block; /* Makes the button width fit the content */
+        }
+
+        .social-buttons a.instagram {
+            background-color: #E4405F; /* Instagram red */
+        }
+
+        .social-buttons a:hover {
+            background-color: #128C7E; /* WhatsApp dark green */
+        }
+
+        .social-buttons a.instagram:hover {
+            background-color: #C13584; /* Instagram dark red */
         }
     </style>
 </head>
 <body>
+    <div class="background-container">
+        <!-- Background image -->
+        <img src="https://images.tv9marathi.com/wp-content/uploads/2024/11/IPL_Auction_2025.jpg?w=1280" alt="Background Image">
+        <!-- Dark filter overlay -->
+        <div class="dark-overlay"></div>
+    </div>
+
     <h1>Watch IPL Live</h1>
     <div class="container">
         <div class="channel">
@@ -53,6 +122,12 @@
             📺 Server 2
             <a href="https://pramodmadushan.me/server2" target="_blank">Watch on Sand Cricket</a>
         </div>
+    </div>
+
+    <!-- Social Media Buttons -->
+    <div class="social-buttons">
+        <a href="https://whatsapp.com/channel/0029Va9DGWMHLHQdbTcTSG42" target="_blank">Join WhatsApp for updates & Data Free Links</a>
+        <a href="https://www.instagram.com/dopramo/" target="_blank" class="instagram">Follow Me on Instagram</a>
     </div>
 </body>
 </html>
