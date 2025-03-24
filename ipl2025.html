@@ -46,6 +46,9 @@
             justify-content: center;
             gap: 30px;
             padding-top: 100px; /* Adjust padding for content positioning */
+            flex-wrap: wrap; /* Ensure the content wraps on smaller screens */
+            margin-left: 10px;
+            margin-right: 10px;
         }
 
         .channel {
@@ -55,6 +58,8 @@
             box-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
             transition: transform 0.3s;
             font-size: 24px;
+            flex-basis: 45%; /* Take up 45% of the container's width */
+            margin: 10px;
         }
 
         .channel:hover {
@@ -101,6 +106,19 @@
 
         .social-buttons a.instagram:hover {
             background-color: #C13584; /* Instagram dark red */
+        }
+
+        /* Media Query for Mobile Devices */
+        @media (max-width: 768px) {
+            .container {
+                gap: 10px; /* Reduced gap between the server blocks */
+            }
+
+            .channel {
+                flex-basis: 100%; /* Take up the full width on smaller screens */
+                margin-left: 10px;
+                margin-right: 10px;
+            }
         }
     </style>
 </head>
